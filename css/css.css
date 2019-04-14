@@ -1,0 +1,148 @@
+hr {
+  margin: 5px;
+}
+ 
+#field {
+	width: 654px;
+	height: 654px;
+	border: 2px solid black;
+	background: #c9aec6;
+	position: relative;
+	float: left;
+}
+
+.playplace {
+	float: left;
+  text-align: center;
+}
+
+#usertable {
+	position: relative;
+  margin-top: 15px;
+	margin-left: 30px;
+	width: 300px;
+	min-height: 100px;
+	border: 2px solid black;
+	text-align: center;
+}
+
+#modal {
+  position: fixed;
+  display: none;
+  overflow: auto;
+  top: 50px;
+  left: 350px;
+  z-index: 1;
+  background-color: #0f091ff2;
+  width: 350px;
+  height: 235px;
+}
+
+.btns {
+  min-height: 50px;
+  width: 300px;
+  margin-left: -100px;
+}
+
+#close {
+  margin-top: 10px;
+  cursor: pointer;
+  float: right;
+}
+
+#btncub {
+  margin-top: 10px;
+  cursor: pointer;
+  width: 120px;
+  float: left;
+}
+
+#cub {
+	height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.wrap {
+  margin: 55px 15px;
+  perspective: 1000px;
+  perspective-origin: 100% 100%;
+}
+
+.cube {
+  margin: auto;
+  position: relative;
+  height: 65px;
+  width: 65px;
+  transform-style: preserve-3d;
+}
+
+.cube > div {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  border: solid 1px #eeeeee;
+  color: #ffffff;
+  border-radius: 17px;
+}
+
+#front {
+  transform: translateZ(65px);
+  background: url(../img/cub1.png) center center no-repeat;
+  background-size: contain;
+}
+
+#back {
+  transform: translateZ(0px) rotateY(180deg);
+  background: url(../img/cub2.png) center center no-repeat;
+  background-size: contain;
+}
+
+#right {
+  transform: rotateY(-270deg) translateX(0px);
+  transform-origin: top right;
+  background: url(../img/cub3.png) center center no-repeat;
+  background-size: contain;
+}
+
+#left {
+  transform: rotateY(270deg) translateX(0px);
+  transform-origin: center left;
+  background: url(../img/cub4.png) center center no-repeat;
+  background-size: contain;
+}
+
+#top {
+  transform: rotateX(-270deg) translateY(0px);
+  transform-origin: top center;
+  background: url(../img/cub5.png) center center no-repeat;
+  background-size: contain;
+}
+
+#bottom {
+  transform: rotateX(270deg) translateY(0px);
+  transform-origin: bottom center;
+  background: url(../img/cub6.png) center center no-repeat;
+  background-size: contain;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  
+  to {
+    transform: rotateX(-360deg) rotateY(360deg);
+  }
+}
+
+.cube {
+  animation: rotate 2s infinite linear;
+}
+
+
+
+

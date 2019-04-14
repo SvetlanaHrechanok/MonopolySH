@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.css">
+	<link rel="stylesheet" href="css/css.css">
+	<title>Монополия</title>
+</head>
+
+<body>
+
+	<div id="field">
+		
+	</div>
+
+
+<div class="playplace">
+
+	<div id="usertable">
+		<input type="number" id="funds" class="form-control">
+		<input type="text" id="name" class="form-control">
+		<br>
+		<button id="button" class="btn btn-info">Добавить игрока</button>
+	</div>
+
+	<br>
+	
+	<button id="modalCub" class="btn btn-success">Сделать ход</button>
+
+	<div id=modal>
+		<div id="cub">
+			<div class="wrap">
+			  <div class="cube">
+			    <div id="front">	 </div>
+			    <div id="back">	     </div>
+			    <div id="top">       </div>
+			    <div id="bottom">    </div>
+			    <div id="left">	     </div>
+			    <div id="right">     </div>
+			  </div>
+			</div>
+			<div class="btns">
+				<button id="btncub" class="btn btn-info" onclick="changecub()">Стоп</button>
+				<button id="close" class="btn btn-danger">Закрыть</button>
+			</div>
+		</div>	
+	</div>
+
+</div>
+	
+<script src="js/field.js"></script>
+<script src="js/storage.js"></script>		
+<script src="js/cube.js"></script>
+<script src="js/lib/jquery-3.3.1.js"></script>
+<script src="js/lib/bootstrap.js"></script>
+
+</body>
+</html>
