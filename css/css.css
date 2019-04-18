@@ -21,9 +21,10 @@ hr {
   margin-top: 15px;
 	margin-left: 30px;
 	width: 300px;
-	min-height: 100px;
+	min-height: 50px;
 	border: 2px solid black;
 	text-align: center;
+  overflow: -webkit-paged-y;
 }
 
 #modal {
@@ -145,6 +146,37 @@ hr {
   animation: rotate 2s infinite linear;
 }
 
-
-
+.player{
+  border:1px solid black;
+  box-shadow: 1px 1px 1px #123;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  position: absolute;
+  float: right;
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 1px #123;
+  line-height: 43px;
+}
+ #player1 {
+  background: red;
+  top: 3px;
+  left: 5px;
+ }
+#player2 {
+  background: green;
+  top: 3px;
+  left: 10px;
+ }
+ #player3 {
+  background: blue;
+  top: 3px;
+  left: 15px;
+ }
+ #player4 {
+  background: yellow;
+  top: 3px;
+  left: 20px;
+ }
 

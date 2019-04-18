@@ -67,7 +67,7 @@ function drawBox(objDiv){
 
 	let div = document.createElement('div');
 		div.style.backgroundColor = "#bbb";
-		div.style.border = "0.5px solid black";
+		div.style.border = "1px solid black";
 		div.style.position = "absolute";
 		div.style.top = objDiv.top + 'px';
 		div.style.left = objDiv.left + 'px';

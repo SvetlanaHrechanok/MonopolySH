@@ -25,9 +25,16 @@
 	</div>
 
 	<br>
-	
-	<button id="modalCub" class="btn btn-success">Сделать ход</button>
 
+	<span>Сейчас ходит </span><span id="playerNumber"></span>
+	
+	<button id="modalCub" class="btn btn-success">Бросить кубик</button>
+	<hr>
+	<span id="cubNumber">0</span><span> ходов</span>
+	<button id="move" class="btn btn-primary">Походить</button>
+
+	
+	
 	<div id=modal>
 		<div id="cub">
 			<div class="wrap">
@@ -40,6 +47,7 @@
 			    <div id="right">     </div>
 			  </div>
 			</div>
+			
 			<div class="btns">
 				<button id="btncub" class="btn btn-info" onclick="changecub()">Стоп</button>
 				<button id="close" class="btn btn-danger">Закрыть</button>
@@ -48,10 +56,12 @@
 	</div>
 
 </div>
+
 	
 <script src="js/field.js"></script>
 <script src="js/storage.js"></script>		
 <script src="js/cube.js"></script>
+<script src="js/move.js"></script>
 <script src="js/lib/jquery-3.3.1.js"></script>
 <script src="js/lib/bootstrap.js"></script>
 

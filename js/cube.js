@@ -3,6 +3,7 @@
 let modal = document.getElementById('modal');
 let cube = document.getElementById('modalCub');
 let close = document.getElementById('close');
+let check = 0;
 
 cube.addEventListener('click', () => {
     modal.style.display = "block";
@@ -17,12 +18,12 @@ window.addEventListener('click', (event) => {
     modal.style.display = "none";
 });
 
-let check = 0;
-
 function changego(){
+
 	let rand = Math.floor(Math.random()*6)+1;
 	let stop = document.getElementsByClassName("cube");
 	stop[0].style.animation = "none";
+	document.getElementById('cubNumber').innerHTML = rand;
 
 	switch(rand)
 	{
@@ -78,6 +79,7 @@ function changego(){
 }
 
 function changecub(){
+
 	let stop = document.getElementsByClassName("cube");
 
 	if(check==0){
