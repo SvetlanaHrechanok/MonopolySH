@@ -6,12 +6,16 @@ function writeGamers() {
     for (var i=0,key; i < localStorage.length; i++) {
         key = localStorage.key(i);
 
-        let returnObj = JSON.parse(localStorage.getItem(key));
+        if(key != "move"){
+            let returnObj = JSON.parse(localStorage.getItem(key));
 
-        returnst+= '<hr>'
-        +returnObj.namePlayer + ': $'
-        +returnObj.funds +' | '
-        +returnObj.place + ' ';
+            returnst+= '<hr>'
+            +returnObj.namePlayer + ': $'
+            +returnObj.funds +' | '
+            +returnObj.place + ' ';
+        }
+
+        
     }
 
     let div = document.createElement("div");
@@ -43,6 +47,11 @@ button.addEventListener('click', () =>{
         } else {
             let i = localStorage.length-1;
             let key = localStorage.key(i);
+           
+            if (key == "move"){
+                i = localStorage.length-2;
+                key = localStorage.key(i);
+            }
             let returnObj = JSON.parse(localStorage.getItem(key));
                 idplayer = parseInt(returnObj.idPlayer)+1;
         }
@@ -59,6 +68,7 @@ button.addEventListener('click', () =>{
              
             let serialObj = JSON.stringify(myItem); 
             localStorage.setItem(idplayer, serialObj); //запишем его в хранилище
+            localStorage.setItem("move",1);
             document.location.href='index.html';
         } 
     }

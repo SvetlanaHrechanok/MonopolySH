@@ -163,20 +163,24 @@ hr {
   background: red;
   top: 3px;
   left: 5px;
+  z-index: 5;
  }
 #player2 {
   background: green;
   top: 3px;
   left: 10px;
+  z-index: 6;
  }
  #player3 {
   background: blue;
   top: 3px;
   left: 15px;
+  z-index: 7;
  }
  #player4 {
   background: yellow;
   top: 3px;
   left: 20px;
+  z-index: 8;
  }
 
