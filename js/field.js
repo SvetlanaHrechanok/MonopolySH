@@ -148,3 +148,5 @@ for(let i = 0; i < 41; i++){
 
 	field.appendChild( drawBox(newDiv) );
 }
+
+let flagMove = 0;

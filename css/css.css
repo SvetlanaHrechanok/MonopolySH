@@ -33,7 +33,7 @@ hr {
   overflow: auto;
   top: 0px;
   left: 0px;
-  z-index: 1;
+  z-index: 100;
   background-color: #0f091ff2;
   width: 100%;
   height: 100%;
@@ -89,7 +89,7 @@ hr {
   opacity: 1;
   border: solid 1px #eeeeee;
   color: #ffffff;
-  border-radius: 17px;
+  border-radius: 3px;
 }
 
 #front {

@@ -6,7 +6,7 @@ function writeGamers() {
     for (var i=0,key; i < localStorage.length; i++) {
         key = localStorage.key(i);
 
-        if(key != "move"){
+        if(key != "move") {
             let returnObj = JSON.parse(localStorage.getItem(key));
 
             returnst+= '<hr>'
@@ -14,8 +14,6 @@ function writeGamers() {
             +returnObj.funds +' | '
             +returnObj.place + ' ';
         }
-
-        
     }
 
     let div = document.createElement("div");

@@ -3,10 +3,11 @@
 let modal = document.getElementById('modal');
 let cube = document.getElementById('modalCub');
 let close = document.getElementById('close');
-let check = 0;
 
 cube.addEventListener('click', () => {
-    modal.style.display = "block";
+	if (flagMove == 0) {
+		modal.style.display = "block";
+	}
 });
 
 close.addEventListener('click', () => {
@@ -14,8 +15,9 @@ close.addEventListener('click', () => {
 });
 
 window.addEventListener('click', (event) => {
-    if(event.target == modal)
-    modal.style.display = "none";
+    if(event.target == modal) {
+    	modal.style.display = "none";
+	}
 });
 
 function changego(){
@@ -23,7 +25,7 @@ function changego(){
 	let rand = Math.floor(Math.random()*6)+1;
 	let stop = document.getElementsByClassName("cube");
 	stop[0].style.animation = "none";
-	document.getElementById('cubNumber').innerHTML = rand;
+	document.getElementById('cubNumber').innerHTML = rand + " ходов";
 
 	switch(rand)
 	{
@@ -80,17 +82,9 @@ function changego(){
 
 function changecub(){
 
-	let stop = document.getElementsByClassName("cube");
+	changego();
 
-	if(check==0){
-		changego();
-		check=1;
-		document.getElementById('btncub').innerHTML = 'Бросить кубик';
-	}else{
-		if(check==1){
-			check=0;
-			stop[0].style.animation = "rotate 2s infinite linear";
-			document.getElementById('btncub').innerHTML = 'Стоп';
-		}
-	}
+	document.getElementById('modalCub').className = "btn btb-default";
+	document.getElementById('btncub').style.display = "none";
+	flagMove = 1;
 }
