@@ -27,6 +27,14 @@ hr {
   overflow: -webkit-paged-y;
 }
 
+#game {
+  display: none;
+}
+
+#startGame, #stopGame {
+  margin: 20px 55px 0px;
+}
+
 #modal {
   position: fixed;
   display: none;

@@ -1,5 +1,25 @@
 'use strict';
 
+startGame.addEventListener('click', () =>{
+    localStorage.clear();
+
+    localStorage.setItem("fieldStep","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]");
+
+    localStorage.setItem("move",1);
+
+    document.getElementById('game').style.display = "block";
+
+    document.location.href = 'index.html';
+});
+
+stopGame.addEventListener('click', () =>{
+    localStorage.clear();
+
+    document.getElementById('game').style.display = "none";
+
+    document.location.href = 'index.html';
+});
+
 function infoFromId(id){
 
 	let inside, cost, pay, lineCost, linePay;
@@ -150,3 +170,13 @@ for(let i = 0; i < 41; i++){
 }
 
 let flagMove = 0;
+
+/*let fieldStep = JSON.parse(localStorage.getItem("fieldStep"));
+
+if (fieldStep == null) {
+  fieldStep = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  localStorage.setItem("fieldStep",fieldStep);
+}*/
+
+
+

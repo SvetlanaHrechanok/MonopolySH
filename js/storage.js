@@ -1,3 +1,5 @@
+'use strict';
+
 let button = document.getElementById('button');
 
 function writeGamers() {
@@ -6,7 +8,7 @@ function writeGamers() {
     for (var i=0,key; i < localStorage.length; i++) {
         key = localStorage.key(i);
 
-        if(key != "move") {
+        if(key != "move" && key != "fieldStep") {
             let returnObj = JSON.parse(localStorage.getItem(key));
 
             returnst+= '<hr>'
@@ -36,26 +38,22 @@ button.addEventListener('click', () =>{
 
 	if ( name == "" || funds == "") {
 
-        alert("You have a mistake.");
+        alert("Введите количество денег и имя игрока");
         
 	}else{
 
-        if (localStorage.length == 0) {
+        if (localStorage.length == 2) {
             idplayer = 1;
         } else {
-            let i = localStorage.length-1;
+            let i = localStorage.length-3;
             let key = localStorage.key(i);
-           
-            if (key == "move"){
-                i = localStorage.length-2;
-                key = localStorage.key(i);
-            }
             let returnObj = JSON.parse(localStorage.getItem(key));
                 idplayer = parseInt(returnObj.idPlayer)+1;
         }
 
         if(idplayer > 4){
             alert("Больше игроков создавать нельзя!");
+            document.location.href='index.html';
         } else {
             let myItem = {
                 idPlayer: idplayer,
@@ -65,8 +63,8 @@ button.addEventListener('click', () =>{
             };   
              
             let serialObj = JSON.stringify(myItem); 
-            localStorage.setItem(idplayer, serialObj); //запишем его в хранилище
-            localStorage.setItem("move",1);
+            localStorage.setItem(idplayer, serialObj);
+
             document.location.href='index.html';
         } 
     }
@@ -76,24 +74,26 @@ button.addEventListener('click', () =>{
 function drawPlayerdiv() {
 
   for (let i=0,key; i < localStorage.length; i++) {
-    key = localStorage.key(i);
+        key = localStorage.key(i);
 
-    let returnObj = JSON.parse(localStorage.getItem(key));
-    let place = returnObj.place;
+        if (key != "move" && key != "fieldStep") {
+            let returnObj = JSON.parse(localStorage.getItem(key));
+            let place = returnObj.place;
 
-    for (let j = 0; j < 40; j++) {
-      if (place == j) {
+            for (let j = 0; j < 40; j++) {
+                if (place == j) {
 
-        let div = document.createElement('div');
-        div.className = "player";
-        div.innerHTML = returnObj.namePlayer;
-        div.id = 'player'+ returnObj.idPlayer;
+                    let div = document.createElement('div');
+                    div.className = "player";
+                    div.innerHTML = returnObj.namePlayer;
+                    div.id = 'player'+ returnObj.idPlayer;
 
-        let fieldplayer = document.getElementById(j);
-        fieldplayer.appendChild(div);
-      }
+                    let fieldplayer = document.getElementById(j);
+                    fieldplayer.appendChild(div);
+                }
+            };
+        }
     };
-  };
 }
 
 writeGamers();
