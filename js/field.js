@@ -8,6 +8,7 @@ startGame.addEventListener('click', () =>{
     localStorage.setItem("move",1);
 
     document.getElementById('game').style.display = "block";
+    document.getElementById('addPlayer').style.display = "block";
 
     document.location.href = 'index.html';
 });
@@ -167,7 +168,7 @@ for(let i = 0; i < 41; i++){
 	newDiv.id = i;
 
 	field.appendChild( drawBox(newDiv) );
-}
+};
 
 let flagMove = 0;
 

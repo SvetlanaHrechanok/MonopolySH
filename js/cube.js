@@ -5,7 +5,7 @@ let cube = document.getElementById('modalCub');
 let close = document.getElementById('close');
 
 cube.addEventListener('click', () => {
-	if (flagMove == 0) {
+	if (flagMove == 0 && localStorage.length > 2) {
 		modal.style.display = "block";
 	}
 });

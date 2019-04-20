@@ -1,6 +1,6 @@
 'use strict';
 
-let button = document.getElementById('button');
+let addPlayer = document.getElementById('addPlayer');
 
 function writeGamers() {
     let returnst = "";
@@ -12,8 +12,8 @@ function writeGamers() {
             let returnObj = JSON.parse(localStorage.getItem(key));
 
             returnst+= '<hr>'
-            +returnObj.namePlayer + ': $'
-            +returnObj.funds +' | '
+            +returnObj.namePlayer + ': на счету $'
+            +returnObj.funds +' | ячейка поля №'
             +returnObj.place + ' ';
         }
     }
@@ -21,7 +21,7 @@ function writeGamers() {
     let div = document.createElement("div");
         div.style.height = 100 + 'px';
         div.style.backgroundColor = "#fefefe";
-        div.style.width = 200 + 'px';
+        div.style.width = 300 + 'px';
         div.style.margin = '0 auto';
         div.innerHTML = returnst;
 
@@ -30,7 +30,7 @@ function writeGamers() {
     writeGamers.appendChild(div);
 }
 
-button.addEventListener('click', () =>{
+addPlayer.addEventListener('click', () =>{
     
     let funds = document.getElementById('funds').value;
     let name = document.getElementById('name').value;
