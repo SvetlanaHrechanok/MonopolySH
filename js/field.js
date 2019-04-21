@@ -170,14 +170,8 @@ for(let i = 0; i < 41; i++){
 	field.appendChild( drawBox(newDiv) );
 };
 
-let flagMove = 0;
 
-/*let fieldStep = JSON.parse(localStorage.getItem("fieldStep"));
 
-if (fieldStep == null) {
-  fieldStep = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-  localStorage.setItem("fieldStep",fieldStep);
-}*/
 
 
 

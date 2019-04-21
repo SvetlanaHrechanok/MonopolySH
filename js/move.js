@@ -1,13 +1,5 @@
 'use strict';
 
-let whoMove = JSON.parse(localStorage.getItem("move"));
-
-if (localStorage.length > 2) {
-    let returnObj = JSON.parse(localStorage.getItem(whoMove));
-    let newname = returnObj.namePlayer;
-    document.getElementById('playerNumber').innerHTML = "Сейчас ходит " + newname;
-}
-
 move.addEventListener('click', () =>{
     let number = document.getElementById('cubNumber').innerHTML;
     
@@ -32,8 +24,10 @@ move.addEventListener('click', () =>{
             }
         }
 
-        if (whoMove == localStorage.length - 2) {
-            whoMove = 1;
+        //поочередное движение игроков
+        // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
+        if (whoMove == localStorage.length - 2) { 
+            whoMove = 1; 
         } else {
             whoMove++;
         }

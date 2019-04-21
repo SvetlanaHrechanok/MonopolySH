@@ -1,30 +1,33 @@
 'use strict'
 
-let modal = document.getElementById('modal');
-let cube = document.getElementById('modalCub');
-let close = document.getElementById('close');
-
-cube.addEventListener('click', () => {
+modalCub.addEventListener('click', () => {
 	if (flagMove == 0 && localStorage.length > 2) {
 		modal.style.display = "block";
+		document.getElementById('modalCub').className = "btn btb-default";
+		setTimeout( () => {
+			let cubStop = document.getElementsByClassName("cube");
+				cubStop[0].style.animation = "none";
+		},2000);
+
+		changego();
+
+		setTimeout( () => {
+			modal.style.display = "none";
+		},3000);
+
+		flagMove = 1;
 	}
 });
 
-close.addEventListener('click', () => {
-    modal.style.display = "none";
-});
-
-window.addEventListener('click', (event) => {
-    if(event.target == modal) {
+/*window.addEventListener('click', (event) => {
+    if(event.target == modal || event.target == document.getElementById('cub')) {
     	modal.style.display = "none";
 	}
-});
+});*/
 
 function changego(){
 
 	let rand = Math.floor(Math.random()*6)+1;
-	let stop = document.getElementsByClassName("cube");
-	stop[0].style.animation = "none";
 	document.getElementById('cubNumber').innerHTML = rand + " ходов";
 
 	switch(rand)
@@ -80,11 +83,3 @@ function changego(){
 	}
 }
 
-function changecub(){
-
-	changego();
-
-	document.getElementById('modalCub').className = "btn btb-default";
-	document.getElementById('btncub').style.display = "none";
-	flagMove = 1;
-}

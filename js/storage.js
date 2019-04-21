@@ -1,7 +1,5 @@
 'use strict';
 
-let addPlayer = document.getElementById('addPlayer');
-
 function writeGamers() {
     let returnst = "";
     

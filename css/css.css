@@ -67,8 +67,8 @@ hr {
 }
 
 #cub {
-	height: 280px;
-  width: 410px;
+	height: 250px;
+  width: 300px;
   background: #3b5158;
   margin: 0 auto;
 }
@@ -151,7 +151,7 @@ hr {
 }
 
 .cube {
-  animation: rotate 2s infinite linear;
+  animation: rotate 1s infinite linear;
 }
 
 .player{
