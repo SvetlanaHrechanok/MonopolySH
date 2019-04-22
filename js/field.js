@@ -1,22 +1,35 @@
 'use strict';
 
-startGame.addEventListener('click', () =>{
-    localStorage.clear();
+let startGame = document.getElementById('startGame');
 
-    localStorage.setItem("fieldStep","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]");
+let stopGame = document.getElementById('stopGame');
+
+let countOfField = 40;
+
+startGame.addEventListener('click', () =>{
+	localStorage.clear();
+	
+	let fieldStep = [];
+
+	for(let i = 0; i < countOfField; i++) {
+
+		fieldStep[i] = 0;
+	}
+
+    localStorage.setItem("fieldStep", `[${fieldStep}]`);
 
     localStorage.setItem("move",1);
 
     document.getElementById('game').style.display = "block";
     document.getElementById('addPlayer').style.display = "block";
 
-    document.location.href = 'index.html';
+    document.location.href = '/';
 });
 
 stopGame.addEventListener('click', () =>{
     let end = confirm("Вы уверенны что хотите завершить игру?");
     
-    if (end == true) {
+    if (end === true) {
     	localStorage.clear();
     	document.getElementById('game').style.display = "none";
     }
@@ -24,6 +37,7 @@ stopGame.addEventListener('click', () =>{
     document.location.href = 'index.html';
 });
 
+//функция формирования строки информации в клетках поля
 function infoFromId(id){
 
 	let inside, cost, pay, lineCost, linePay;
@@ -60,8 +74,8 @@ function infoFromId(id){
 		cost = 400;
 		pay = 200;
 
-		lineCost = '<span id="cost' + id + '">' + cost + '</span>';
-		linePay = '<span id="pay' + id + '">' + pay + '</span>';
+		lineCost = `<span id="cost${id}">${cost}</span>`;
+		linePay = `<span id="pay${id}">${pay}</span>`;
 
 		inside = lineCost + '<br>' + linePay;
 		break;
@@ -72,21 +86,23 @@ function infoFromId(id){
 	case 38:
 
 		cost = 500;
-		inside = 'Бонус <span id="bonus' + id + '">' + cost + '</span>';
+		inside = `Бонус <span id="bonus${id}">${cost}</span>`;
 		break;
 
 	default:
 		cost = id * 4 * 50;
 		pay = id * 50;
 
-		lineCost = '<span id="cost' + id + '">' + cost + '</span>';
-		linePay = '<span id="pay' + id + '">' + pay + '</span>';
+		lineCost = `<span id="cost${id}">${cost}</span>`;
+		linePay = `<span id="pay${id}">${pay}</span>`;
 
 		inside = lineCost + '<br>' + linePay;
 	}
 	return inside;
 }
 
+// функция создания блоков поля.
+// на вход принимает блок, на выходе - его сгенерированный стиль.
 function drawBox(objDiv){
 
 	let div = document.createElement('div');
@@ -103,8 +119,10 @@ function drawBox(objDiv){
 	return div;
 }
 
+// поиск блока для отрисовки поля
 let field = document.getElementById("field");
 
+// начальные переменные наших клеток
 let newDiv = {
 	top : 0,
 	left : 0,
@@ -113,7 +131,9 @@ let newDiv = {
 	id : 0
 };
 
-for(let i = 0; i < 41; i++){
+// цикл пробегает по индексам клеток, задавая их позицию и размеры
+// в зависимости от их номера
+for(let i = 0; i <= countOfField; i++){
 	
 	switch(i){
 		case 0:	// start
@@ -121,9 +141,14 @@ for(let i = 0; i < 41; i++){
 			newDiv.height = 100;
 			break;
 
+		// тернарный оператор в условии позволяет задавать 
+		// диапазон значения полей, сокращая код
+
 		case (i > 0 && i < 10)? i : 'alert' : //top line
 			newDiv.width = 50;
 			newDiv.height = 100;
+
+			//смещение позволяет сливать границы клеток
 			newDiv.left = 100 + (i - 1) * newDiv.width;
 			break;
 
@@ -170,11 +195,5 @@ for(let i = 0; i < 41; i++){
 	}
 	newDiv.id = i;
 
-	field.appendChild( drawBox(newDiv) );
-};
-
-
-
-
-
-
+	field.appendChild(drawBox(newDiv));
+}
