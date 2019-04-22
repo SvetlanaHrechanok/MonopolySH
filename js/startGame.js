@@ -7,7 +7,8 @@ let step = JSON.parse(localStorage.getItem("fieldStep"));
 //больше нельзя добавлять игроков, игра началась
 for (let i = 0; i < step.length; i++) {
     if (step[i] > 0) {
-    	document.getElementById('usertable').style.display = "none"; 
+    	document.getElementById('add').style.display = "none"; 
+    	document.getElementById('btnGo').style.display = "block";
 	}
 };
 

@@ -27,7 +27,7 @@ hr {
   overflow: -webkit-paged-y;
 }
 
-#game {
+#game, #btnGo {
   display: none;
 }
 

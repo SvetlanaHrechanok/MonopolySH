@@ -14,9 +14,12 @@ startGame.addEventListener('click', () =>{
 });
 
 stopGame.addEventListener('click', () =>{
-    localStorage.clear();
-
-    document.getElementById('game').style.display = "none";
+    let end = confirm("Вы уверенны что хотите завершить игру?");
+    
+    if (end == true) {
+    	localStorage.clear();
+    	document.getElementById('game').style.display = "none";
+    }
 
     document.location.href = 'index.html';
 });

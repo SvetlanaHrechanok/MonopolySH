@@ -1,5 +1,15 @@
 'use strict';
 
+go.addEventListener('click', () => {
+    if (localStorage.length <= 2)
+    {
+      alert("Не созданы игроки!");
+    } else {
+      document.getElementById('add').style.display = "none"; 
+      document.getElementById('btnGo').style.display = "block";
+    } 
+});
+
 move.addEventListener('click', () =>{
     let number = document.getElementById('cubNumber').innerHTML;
     

@@ -20,25 +20,32 @@
 	<br>
 
 	<button id="startGame" class="btn btn-info">НАЧАТЬ НОВУЮ ИГРУ</button>
-	<button id="stopGame" class="btn btn-warning">ЗАКОНЧИТЬ ИГРУ</button>
+	<button id="stopGame" class="btn btn-danger">ЗАКОНЧИТЬ ИГРУ</button>
 	
 	<div id="game">
 
 		<div id="usertable">
-			<input type="number" id="funds" class="form-control" placeholder="Введите количество денег на старте">
-			<input type="text" id="name" class="form-control" placeholder="Введите имя игрока">
-			<br>
-			<button id="addPlayer" class="btn btn-info">Добавить игрока</button>
+			<div id="add">
+				<input type="number" id="funds" class="form-control" placeholder="Введите количество денег на старте">
+				<input type="text" id="name" class="form-control" placeholder="Введите имя игрока">
+				<br>
+				<button id="addPlayer" class="btn btn-info">Добавить игрока</button>
+				<br><br>
+				<button id="go" class="btn btn-warning">Старт</button>
+			</div>
 		</div>
 
 		<br>
 
-		<span id="playerNumber"></span>
-		
-		<button id="modalCub" class="btn btn-success">Бросить кубик</button>
-		<hr>
-		<span id="cubNumber"></span>
-		<button id="move" class="btn btn-primary">Походить</button>
+		<div id="btnGo">
+			<span id="playerNumber"></span>
+			<button id="modalCub" class="btn btn-success">Бросить кубик</button>
+			<hr>
+			<span id="cubNumber"></span>
+			<button id="move" class="btn btn-primary">Походить</button>
+		</div>
+
+			
 
 	</div>
 	
