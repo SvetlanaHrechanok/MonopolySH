@@ -34,6 +34,19 @@ move.addEventListener('click', () =>{
             }
         }
 
+      //АНИМАЦИЯ
+      let gopx = parseInt(number)*50; //на сколько пикселей продвинутся 
+
+      let playerGo = anime({
+          targets: document.getElementById('player'+returnObj.idPlayer),
+          translateX: gopx,
+          translateY: 0,
+          easing: 'linear',
+          autoplay: false
+      });
+
+      playerGo.restart();
+
         //поочередное движение игроков
         // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
         if (whoMove == localStorage.length - 2) { 
@@ -48,7 +61,9 @@ move.addEventListener('click', () =>{
 
         localStorage.setItem("fieldStep", JSON.stringify(step));
 
-        document.location.href = 'index.html';
+
+
+        //document.location.href = 'index.html';
     }
 });
 
