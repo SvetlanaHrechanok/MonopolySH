@@ -38,6 +38,18 @@ move.addEventListener('click', () =>{
         //АНИМАЦИЯ
         animePlayer(returnObj.idPlayer, oldplace, number);
 
+        //выбор действия при сделке
+
+        document.getElementById('dealField').style.display = "block";
+        let returnField = JSON.parse(localStorage.getItem("fieldStep"));
+        let line = "";
+        if(returnField[newplace] == 0){
+            line = newplace + " свободна";
+        } else {
+            line = newplace + " занята игроком " + returnObj.namePlayer;
+        }
+        document.getElementById('iddeal').innerHTML = line;
+
         //поочередное движение игроков
         // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
         if (whoMove == localStorage.length - 2) { 
@@ -51,8 +63,6 @@ move.addEventListener('click', () =>{
         localStorage.setItem("move",whoMove);
 
         localStorage.setItem("fieldStep", JSON.stringify(step));
-
-        //document.location.href = '/';
     }
 });
 
@@ -176,11 +186,11 @@ function AnimeCorner(id,goXpx,goYpx) {
         });
     } else {
         playerGo.add({
-            targets: document.getElementById('player'+id),
+            targets: document.getElementById('player' + id),
             translateY: goYpx,
             easing: 'linear'
         }).add({
-            targets: document.getElementById('player'+id),
+            targets: document.getElementById('player' + id),
             translateX: goXpx,
             easing: 'linear'
         });
@@ -188,3 +198,20 @@ function AnimeCorner(id,goXpx,goYpx) {
 
     playerGo.restart();  
 }
+
+let buy = document.getElementById('buy');
+let stand = document.getElementById('stand'); 
+
+buy.addEventListener('click', () =>{
+    let dealField = JSON.parse(localStorage.getItem('fieldStep'));
+    let player = JSON.parse(localStorage.getItem(whoMove));
+
+
+
+    document.location.href = 'index.html';
+});
+
+stand.addEventListener('click', () =>{
+    
+    document.location.href = 'index.html';
+});
