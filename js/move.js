@@ -59,8 +59,9 @@ move.addEventListener('click', () =>{
 function animePlayer(idPlayer, oldplace, number){
   //goXpx на сколько пикселей продвинутся по оси Х
   //goYpx на сколько пикселей продвинутся по оси Y
-    let goXpx = 0; 
-    let goYpx = 0;
+    let number1;
+    let goXpx; 
+    let goYpx;
     let newplace = oldplace + number;
 
     switch(oldplace){
@@ -76,31 +77,12 @@ function animePlayer(idPlayer, oldplace, number){
             Anime(idPlayer,goXpx,goYpx);
         break;
 
-        case (oldplace < 10 && newplace > 10)? oldplace : 'alert' : //top line
-            let number1 = 10 - oldplace;
-            let goXpx1 = 50*(number1);
-            let goYpx1 = 0;
-            
+        case (oldplace < 10 && newplace > 10)? oldplace : 'alert' :
+            number1 = 10 - oldplace;
+            goXpx = 50*(number1);
             number = number - number1;
-            let goXpx2 = 0;
-            let goYpx2 = 100 + 50*(number-1);
-            
-            let playerGo1 = anime({
-                targets: document.getElementById('player'+idPlayer),
-                translateX: [
-                    {value: goXpx1, duration: 500},
-                    {value: goXpx2, duration: 500}
-                  ],
-                translateY: [
-                    {value: goYpx1, duration: 500},
-                    {value: goYpx2, duration: 500}
-                  ],
-                easing: 'linear',
-                autoplay: false
-            });
-
-          playerGo1.restart();
-
+            goYpx = 100 + 50*(number-1);
+            AnimeCorner(idPlayer,goXpx,goYpx)
         break;
 
         case 10:
@@ -115,10 +97,12 @@ function animePlayer(idPlayer, oldplace, number){
             Anime(idPlayer,goXpx,goYpx);
         break;
 
-        case (oldplace < 20 && newplace > 20)? oldplace : 'alert' : //top line
-            goXpx = 0;
-            goYpx = 0;
-            Anime(idPlayer,goXpx,goYpx);
+        case (oldplace < 20 && newplace > 20)? oldplace : 'alert' :
+            number1 = 20 - oldplace;
+            goYpx = 50*(number1);
+            number = number - number1;
+            goXpx = -(100 + 50*(number-1));
+            AnimeCorner(idPlayer,goXpx,goYpx);
         break;
 
         case 20:
@@ -133,10 +117,12 @@ function animePlayer(idPlayer, oldplace, number){
             Anime(idPlayer,goXpx,goYpx);
         break;
 
-        case (oldplace < 30 && newplace > 30)? oldplace : 'alert' : //top line
-            goXpx = 0;
-            goYpx = 0;
-            Anime(idPlayer,goXpx,goYpx);
+        case (oldplace < 30 && newplace > 30)? oldplace : 'alert' :
+            number1 = 30 - oldplace;
+            goXpx = -50*(number1);
+            number = number - number1;
+            goYpx = -(100 + 50*(number-1));
+            AnimeCorner(idPlayer,goXpx,goYpx);
         break;
 
         case 30:
@@ -150,17 +136,55 @@ function animePlayer(idPlayer, oldplace, number){
             goYpx = -50*number;
             Anime(idPlayer,goXpx,goYpx);
         break;
+
+        case (oldplace < 40 && newplace > 0)? oldplace : 'alert' :
+            number1 = 40 - oldplace;
+            goYpx = -50*(number1);
+            number = number - number1;
+            goXpx = 100 + 50*(number-1);
+            AnimeCorner(idPlayer,goXpx,goYpx);
+        break;
       }    
 }
 
 function Anime(id,goXpx,goYpx) {
     let playerGo = anime({
         targets: document.getElementById('player'+id),
-        translateX: goXpx,
+        translateX: {value: goXpx, duration: 500},
         translateY: goYpx,
         easing: 'linear',
         autoplay: false
     });
 
     playerGo.restart();
+}
+
+function AnimeCorner(id,goXpx,goYpx) {
+    let playerGo = anime.timeline({
+        autoplay: false
+    });
+
+    if(goXpx > 0 && goYpx > 0 || goXpx < 0 && goYpx < 0) {
+        playerGo.add({
+            targets: document.getElementById('player'+id),
+            translateX: goXpx,
+            easing: 'linear'
+        }).add({
+            targets: document.getElementById('player'+id),
+            translateY: goYpx,
+            easing: 'linear'
+        });
+    } else {
+        playerGo.add({
+            targets: document.getElementById('player'+id),
+            translateY: goYpx,
+            easing: 'linear'
+        }).add({
+            targets: document.getElementById('player'+id),
+            translateX: goXpx,
+            easing: 'linear'
+        });
+    }
+
+    playerGo.restart();  
 }
