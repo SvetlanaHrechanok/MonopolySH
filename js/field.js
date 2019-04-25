@@ -3,7 +3,13 @@
 startGame.addEventListener('click', () =>{
     localStorage.clear();
 
-    localStorage.setItem("fieldStep","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]");
+    let fieldStep = {
+        field: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        cost: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        pay: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],     
+        bgcolor: ["#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb"]
+    };
+    localStorage.setObj("fieldStep", fieldStep);
 
     localStorage.setItem("move",1);
 
@@ -90,7 +96,7 @@ function infoFromId(id){
 function drawBox(objDiv){
 
 	let div = document.createElement('div');
-		div.style.backgroundColor = "#bbb";
+		div.style.backgroundColor = objDiv.bgrcolor;
 		div.style.border = "1px solid black";
 		div.style.position = "absolute";
 		div.style.top = objDiv.top + 'px';
@@ -110,8 +116,11 @@ let newDiv = {
 	left : 0,
 	width : 0,
 	height : 0,
+	bgrcolor: "#bbb",
 	id : 0
 };
+
+let bcolor = localStorage.getObj("fieldStep");
 
 for(let i = 0; i < 41; i++){
 	
@@ -169,6 +178,8 @@ for(let i = 0; i < 41; i++){
 
 	}
 	newDiv.id = i;
+
+	newDiv.bgrcolor = bcolor.bgcolor[i];
 
 	field.appendChild( drawBox(newDiv) );
 };

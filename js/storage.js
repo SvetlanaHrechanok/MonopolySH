@@ -7,7 +7,7 @@ function writeGamers() {
         key = localStorage.key(i);
 
         if(key != "move" && key != "fieldStep") {
-            let returnObj = JSON.parse(localStorage.getItem(key));
+            let returnObj = localStorage.getObj(key);
 
             returnst+= '<hr>'
             +returnObj.namePlayer + ': на счету $'
@@ -36,15 +36,9 @@ addPlayer.addEventListener('click', () =>{
     if ( name == "" || funds == "") {
         alert("Введите количество денег и имя игрока");
     }else{
-        if (localStorage.length == 2) {
-            idplayer = 1;
-        } else {
-            let i = localStorage.length-3;
-            let key = localStorage.key(i);
-            let returnObj = JSON.parse(localStorage.getItem(key));
-                idplayer = parseInt(returnObj.idPlayer)+1;
-        }
-
+        
+        idplayer = localStorage.length - 1;
+       
         if(idplayer > 4){
             alert("Больше игроков создавать нельзя!");
             document.location.href='index.html';
@@ -54,10 +48,10 @@ addPlayer.addEventListener('click', () =>{
                 namePlayer: name,
                 funds: funds,
                 place: 0
-            };   
+            };
+ 
+            localStorage.setObj(idplayer, myItem);
 
-            let serialObj = JSON.stringify(myItem); 
-            localStorage.setItem(idplayer, serialObj);
             document.location.href='index.html';
         } 
     }
@@ -69,7 +63,7 @@ function drawPlayerdiv() {
 
         if (key != "move" && key != "fieldStep") {
 
-            let returnObj = JSON.parse(localStorage.getItem(key));
+            let returnObj = localStorage.getObj(key);
             let place = returnObj.place;
 
             for (let j = 0; j < 40; j++) {

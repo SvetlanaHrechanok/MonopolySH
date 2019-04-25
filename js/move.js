@@ -15,7 +15,7 @@ move.addEventListener('click', () =>{
         number = parseInt(number);
     
     if(number != "") {
-        let returnObj = JSON.parse(localStorage.getItem(whoMove));
+        let returnObj = localStorage.getObj(whoMove);
         let oldplace = parseInt(returnObj.place);
         let newplace = parseInt(returnObj.place) + number;
 
@@ -24,30 +24,32 @@ move.addEventListener('click', () =>{
         }
 
         returnObj.place = newplace;
-        localStorage.setItem(whoMove, JSON.stringify(returnObj));
+        localStorage.setObj(whoMove, returnObj);
 
-        let step = JSON.parse(localStorage.getItem("fieldStep"));
+        let step = localStorage.getObj("fieldStep");
              
-        for (let j = 0; j < step.length; j++)
+        for (let j = 0; j < step.field.length; j++)
         {
             if (j == newplace) {
-                step[j] = whoMove;
+                step.field[j] = whoMove;
+                step.bgcolor[j] = colorPlayer[whoMove];
             }
-        }
+        };
 
         //АНИМАЦИЯ
         animePlayer(returnObj.idPlayer, oldplace, number);
 
         //выбор действия при сделке
-
         document.getElementById('dealField').style.display = "block";
-        let returnField = JSON.parse(localStorage.getItem("fieldStep"));
+        let returnField = localStorage.getObj("fieldStep");
         let line = "";
-        if(returnField[newplace] == 0){
+
+        if(returnField.field[newplace] == 0){
             line = newplace + " свободна";
         } else {
             line = newplace + " занята игроком " + returnObj.namePlayer;
         }
+
         document.getElementById('iddeal').innerHTML = line;
 
         //поочередное движение игроков
@@ -62,7 +64,7 @@ move.addEventListener('click', () =>{
         document.getElementById('modalCub').className = "btn btb-success";
         localStorage.setItem("move",whoMove);
 
-        localStorage.setItem("fieldStep", JSON.stringify(step));
+        localStorage.setObj("fieldStep", step);
     }
 });
 
@@ -203,11 +205,12 @@ let buy = document.getElementById('buy');
 let stand = document.getElementById('stand'); 
 
 buy.addEventListener('click', () =>{
-    let dealField = JSON.parse(localStorage.getItem('fieldStep'));
+    let dealField = localStorage.getObj('fieldStep');
     let player = JSON.parse(localStorage.getItem(whoMove));
+    //доработать!!!
+    dealField.bgcolor[?] = colorPlayer[?];
 
-
-
+    localStorage.setObj('fieldStep',dealField);
     document.location.href = 'index.html';
 });
 
