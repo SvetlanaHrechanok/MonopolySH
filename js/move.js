@@ -208,9 +208,9 @@ buy.addEventListener('click', () =>{
     let dealField = localStorage.getObj('fieldStep');
     let player = JSON.parse(localStorage.getItem(whoMove));
     //доработать!!!
-    dealField.bgcolor[?] = colorPlayer[?];
+    //dealField.bgcolor[?] = colorPlayer[?];
 
-    localStorage.setObj('fieldStep',dealField);
+    //localStorage.setObj('fieldStep',dealField);
     document.location.href = 'index.html';
 });
 
