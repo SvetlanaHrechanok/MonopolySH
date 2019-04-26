@@ -33,6 +33,7 @@ stopGame.addEventListener('click', () =>{
 function infoFromId(id){
 
 	let inside, cost, pay, lineCost, linePay;
+	let fieldObj = localStorage.getObj('fieldStep');
 	
 	switch(id){
 	case 0: 
@@ -66,6 +67,11 @@ function infoFromId(id){
 		cost = 400;
 		pay = 200;
 
+		fieldObj.cost[id] = cost;
+		fieldObj.pay[id] = pay;
+
+		localStorage.setObj('fieldStep',fieldObj);
+
 		lineCost = '<span id="cost' + id + '">' + cost + '</span>';
 		linePay = '<span id="pay' + id + '">' + pay + '</span>';
 
@@ -78,12 +84,22 @@ function infoFromId(id){
 	case 38:
 
 		cost = 500;
+
+		fieldObj.cost[id] = cost;
+
+		localStorage.setObj('fieldStep',fieldObj);
+
 		inside = 'Бонус <span id="bonus' + id + '">' + cost + '</span>';
 		break;
 
 	default:
 		cost = id * 4 * 50;
 		pay = id * 50;
+
+		fieldObj.cost[id] = cost;
+		fieldObj.pay[id] = pay;
+
+		localStorage.setObj('fieldStep',fieldObj);
 
 		lineCost = '<span id="cost' + id + '">' + cost + '</span>';
 		linePay = '<span id="pay' + id + '">' + pay + '</span>';

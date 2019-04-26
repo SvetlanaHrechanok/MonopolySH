@@ -29,11 +29,11 @@ function writeGamers() {
 
 addPlayer.addEventListener('click', () =>{
 
-    let funds = document.getElementById('funds').value;
+    let funds = +document.getElementById('funds').value;
     let name = document.getElementById('name').value;
     let idplayer = 0;  
 
-    if ( name == "" || funds == "") {
+    if ( name == "" || funds == 0) {
         alert("Введите количество денег и имя игрока");
     }else{
         

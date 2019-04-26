@@ -201,21 +201,27 @@ function AnimeCorner(id,goXpx,goYpx) {
     playerGo.restart();  
 }
 
-let buy = document.getElementById('buy');
-let stand = document.getElementById('stand'); 
+let buyField = document.getElementById('buyField');
+let standField = document.getElementById('standField'); 
+let payField = document.getElementById('payField');
 
-buy.addEventListener('click', () =>{
+buyField.addEventListener('click', () =>{
     let dealField = localStorage.getObj('fieldStep');
-    let player = localStorage.getObj(whoMove);
+    let player = localStorage.getObj(whoMove-1);
     //доработать!!!
     //whoMove-1, так как в функции move переменная увеличилась на 1
-    dealField.bgcolor[player.place] = colorPlayer[whoMove-1];
+   // dealField.bgcolor[player.place] = colorPlayer[whoMove-1];
+    //КУПИТЬ
+    
+    //player.funds = player.funds - dealField.cost[player.place];
+
 
     localStorage.setObj('fieldStep',dealField);
+    //localStorage.setObj(whoMove-1,player);
     document.location.href = 'index.html';
 });
 
-stand.addEventListener('click', () =>{
+standField.addEventListener('click', () =>{
     
     document.location.href = 'index.html';
 });
