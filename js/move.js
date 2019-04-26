@@ -14,7 +14,7 @@ move.addEventListener('click', () =>{
     let number = document.getElementById('cubNumber').innerHTML;
         number = parseInt(number);
     
-    if(number != "") {
+    if(number != "" && flagMove == 1) {
         let returnObj = localStorage.getObj(whoMove);
         let oldplace = parseInt(returnObj.place);
         let newplace = parseInt(returnObj.place) + number;
@@ -206,11 +206,12 @@ let stand = document.getElementById('stand');
 
 buy.addEventListener('click', () =>{
     let dealField = localStorage.getObj('fieldStep');
-    let player = JSON.parse(localStorage.getItem(whoMove));
+    let player = localStorage.getObj(whoMove);
     //доработать!!!
-    //dealField.bgcolor[?] = colorPlayer[?];
+    //whoMove-1, так как в функции move переменная увеличилась на 1
+    dealField.bgcolor[player.place] = colorPlayer[whoMove-1];
 
-    //localStorage.setObj('fieldStep',dealField);
+    localStorage.setObj('fieldStep',dealField);
     document.location.href = 'index.html';
 });
 
