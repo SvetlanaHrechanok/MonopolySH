@@ -2,12 +2,12 @@
 
 function writeGamers() {
     let returnst = "";
-    
+
     for (var i=0,key; i < localStorage.length; i++) {
         key = localStorage.key(i);
 
         if(key != "move" && key != "fieldStep") {
-            let returnObj = JSON.parse(localStorage.getItem(key));
+            let returnObj = localStorage.getObj(key);
 
             returnst+= '<hr>'
             +returnObj.namePlayer + ': на счету $'
@@ -23,32 +23,22 @@ function writeGamers() {
         div.style.margin = '0 auto';
         div.innerHTML = returnst;
 
-    let writeGamers = document.getElementById('usertable');
-    
+    let writeGamers = document.getElementById('usertable');  
     writeGamers.appendChild(div);
 }
 
 addPlayer.addEventListener('click', () =>{
-    
-    let funds = document.getElementById('funds').value;
+
+    let funds = +document.getElementById('funds').value;
     let name = document.getElementById('name').value;
     let idplayer = 0;  
 
-	if ( name == "" || funds == "") {
-
+    if ( name == "" || funds == 0) {
         alert("Введите количество денег и имя игрока");
+    }else{
         
-	}else{
-
-        if (localStorage.length == 2) {
-            idplayer = 1;
-        } else {
-            let i = localStorage.length-3;
-            let key = localStorage.key(i);
-            let returnObj = JSON.parse(localStorage.getItem(key));
-                idplayer = parseInt(returnObj.idPlayer)+1;
-        }
-
+        idplayer = localStorage.length - 1;
+       
         if(idplayer > 4){
             alert("Больше игроков создавать нельзя!");
             document.location.href='index.html';
@@ -58,24 +48,22 @@ addPlayer.addEventListener('click', () =>{
                 namePlayer: name,
                 funds: funds,
                 place: 0
-            };   
-             
-            let serialObj = JSON.stringify(myItem); 
-            localStorage.setItem(idplayer, serialObj);
+            };
+ 
+            localStorage.setObj(idplayer, myItem);
 
             document.location.href='index.html';
         } 
     }
 });
 
-
 function drawPlayerdiv() {
-
   for (let i=0,key; i < localStorage.length; i++) {
         key = localStorage.key(i);
 
         if (key != "move" && key != "fieldStep") {
-            let returnObj = JSON.parse(localStorage.getItem(key));
+
+            let returnObj = localStorage.getObj(key);
             let place = returnObj.place;
 
             for (let j = 0; j < 40; j++) {

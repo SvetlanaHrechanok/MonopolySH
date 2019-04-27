@@ -16,7 +16,7 @@ hr {
   text-align: center;
 }
 
-#usertable {
+#usertable, #dealField {
 	position: relative;
   margin-top: 15px;
 	margin-left: 50px;
@@ -25,6 +25,10 @@ hr {
 	border: 2px solid black;
 	text-align: center;
   overflow: -webkit-paged-y;
+}
+
+#dealField {
+  display: none;
 }
 
 #game, #btnGo {

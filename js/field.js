@@ -1,35 +1,28 @@
 'use strict';
 
-let startGame = document.getElementById('startGame');
-
-let stopGame = document.getElementById('stopGame');
-
-let countOfField = 40;
-
 startGame.addEventListener('click', () =>{
-	localStorage.clear();
-	
-	let fieldStep = [];
+    localStorage.clear();
 
-	for(let i = 0; i < countOfField; i++) {
-
-		fieldStep[i] = 0;
-	}
-
-    localStorage.setItem("fieldStep", `[${fieldStep}]`);
+    let fieldStep = {
+        field: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        cost: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        pay: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],     
+        bgcolor: ["#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb"]
+    };
+    localStorage.setObj("fieldStep", fieldStep);
 
     localStorage.setItem("move",1);
 
     document.getElementById('game').style.display = "block";
     document.getElementById('addPlayer').style.display = "block";
 
-    document.location.href = '/';
+    document.location.href = 'index.html';
 });
 
 stopGame.addEventListener('click', () =>{
     let end = confirm("Вы уверенны что хотите завершить игру?");
     
-    if (end === true) {
+    if (end == true) {
     	localStorage.clear();
     	document.getElementById('game').style.display = "none";
     }
@@ -37,10 +30,10 @@ stopGame.addEventListener('click', () =>{
     document.location.href = 'index.html';
 });
 
-//функция формирования строки информации в клетках поля
 function infoFromId(id){
 
 	let inside, cost, pay, lineCost, linePay;
+	let fieldObj = localStorage.getObj('fieldStep');
 	
 	switch(id){
 	case 0: 
@@ -74,8 +67,13 @@ function infoFromId(id){
 		cost = 400;
 		pay = 200;
 
-		lineCost = `<span id="cost${id}">${cost}</span>`;
-		linePay = `<span id="pay${id}">${pay}</span>`;
+		fieldObj.cost[id] = cost;
+		fieldObj.pay[id] = pay;
+
+		localStorage.setObj('fieldStep',fieldObj);
+
+		lineCost = '<span id="cost' + id + '">' + cost + '</span>';
+		linePay = '<span id="pay' + id + '">' + pay + '</span>';
 
 		inside = lineCost + '<br>' + linePay;
 		break;
@@ -86,27 +84,35 @@ function infoFromId(id){
 	case 38:
 
 		cost = 500;
-		inside = `Бонус <span id="bonus${id}">${cost}</span>`;
+
+		fieldObj.cost[id] = cost;
+
+		localStorage.setObj('fieldStep',fieldObj);
+
+		inside = 'Бонус <span id="bonus' + id + '">' + cost + '</span>';
 		break;
 
 	default:
 		cost = id * 4 * 50;
 		pay = id * 50;
 
-		lineCost = `<span id="cost${id}">${cost}</span>`;
-		linePay = `<span id="pay${id}">${pay}</span>`;
+		fieldObj.cost[id] = cost;
+		fieldObj.pay[id] = pay;
+
+		localStorage.setObj('fieldStep',fieldObj);
+
+		lineCost = '<span id="cost' + id + '">' + cost + '</span>';
+		linePay = '<span id="pay' + id + '">' + pay + '</span>';
 
 		inside = lineCost + '<br>' + linePay;
 	}
 	return inside;
 }
 
-// функция создания блоков поля.
-// на вход принимает блок, на выходе - его сгенерированный стиль.
 function drawBox(objDiv){
 
 	let div = document.createElement('div');
-		div.style.backgroundColor = "#bbb";
+		div.style.backgroundColor = objDiv.bgrcolor;
 		div.style.border = "1px solid black";
 		div.style.position = "absolute";
 		div.style.top = objDiv.top + 'px';
@@ -119,21 +125,20 @@ function drawBox(objDiv){
 	return div;
 }
 
-// поиск блока для отрисовки поля
 let field = document.getElementById("field");
 
-// начальные переменные наших клеток
 let newDiv = {
 	top : 0,
 	left : 0,
 	width : 0,
 	height : 0,
+	bgrcolor: "#bbb",
 	id : 0
 };
 
-// цикл пробегает по индексам клеток, задавая их позицию и размеры
-// в зависимости от их номера
-for(let i = 0; i <= countOfField; i++){
+let bcolor = localStorage.getObj("fieldStep");
+
+for(let i = 0; i < 41; i++){
 	
 	switch(i){
 		case 0:	// start
@@ -141,14 +146,9 @@ for(let i = 0; i <= countOfField; i++){
 			newDiv.height = 100;
 			break;
 
-		// тернарный оператор в условии позволяет задавать 
-		// диапазон значения полей, сокращая код
-
 		case (i > 0 && i < 10)? i : 'alert' : //top line
 			newDiv.width = 50;
 			newDiv.height = 100;
-
-			//смещение позволяет сливать границы клеток
 			newDiv.left = 100 + (i - 1) * newDiv.width;
 			break;
 
@@ -195,5 +195,13 @@ for(let i = 0; i <= countOfField; i++){
 	}
 	newDiv.id = i;
 
-	field.appendChild(drawBox(newDiv));
-}
+	newDiv.bgrcolor = bcolor.bgcolor[i];
+
+	field.appendChild( drawBox(newDiv) );
+};
+
+
+
+
+
+

@@ -7,13 +7,13 @@ modalCub.addEventListener('click', () => {
 		setTimeout( () => {
 			let cubStop = document.getElementsByClassName("cube");
 				cubStop[0].style.animation = "none";
-		},2000);
+		},1000);
 
 		changego();
 
 		setTimeout( () => {
 			modal.style.display = "none";
-		},3000);
+		},1500);
 
 		flagMove = 1;
 	}
