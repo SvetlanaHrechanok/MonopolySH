@@ -9,9 +9,9 @@ startGame.addEventListener('click', () =>{
         pay: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],     
         bgcolor: ["#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb", "#bbb"]
     };
-    localStorage.setObj("fieldStep", fieldStep);
+    localStorage.setObj('fieldStep', fieldStep);
 
-    localStorage.setItem("move",1);
+    localStorage.setItem('move',1);
 
     document.getElementById('game').style.display = "block";
     document.getElementById('addPlayer').style.display = "block";
@@ -125,7 +125,7 @@ function drawBox(objDiv){
 	return div;
 }
 
-let field = document.getElementById("field");
+let field = document.getElementById('field');
 
 let newDiv = {
 	top : 0,
@@ -136,7 +136,7 @@ let newDiv = {
 	id : 0
 };
 
-let bcolor = localStorage.getObj("fieldStep");
+let bcolor = localStorage.getObj('fieldStep');
 
 for(let i = 0; i < 41; i++){
 	

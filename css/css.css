@@ -194,4 +194,6 @@ hr {
   left: 20px;
   z-index: 8;
  }
-
+#buyField, #payField {
+  display: none;
+ }

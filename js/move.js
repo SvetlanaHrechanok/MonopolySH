@@ -1,5 +1,8 @@
 'use strict';
 
+let go = document.getElementById('go');
+let move = document.getElementById('move');
+
 go.addEventListener('click', () => {
     if (localStorage.length <= 2)
     {
@@ -11,28 +14,27 @@ go.addEventListener('click', () => {
 });
 
 move.addEventListener('click', () =>{
+
     let number = document.getElementById('cubNumber').innerHTML;
         number = parseInt(number);
     
     if(number != "" && flagMove == 1) {
         let returnObj = localStorage.getObj(whoMove);
-        let oldplace = parseInt(returnObj.place);
-        let newplace = parseInt(returnObj.place) + number;
+        let oldplace = returnObj.place;
+        let newplace = returnObj.place + number;
 
         if (newplace >= 40) {
             newplace = newplace%40;
         }
 
-        returnObj.place = newplace;
-        localStorage.setObj(whoMove, returnObj);
-
-        let step = localStorage.getObj("fieldStep");
+        let step = localStorage.getObj('fieldStep');
              
-        for (let j = 0; j < step.field.length; j++)
-        {
-            if (j == newplace) {
-                step.field[j] = whoMove;
-                step.bgcolor[j] = colorPlayer[whoMove];
+        for (let j = 0; j < step.field.length; j++) {
+            if (j == newplace && step.field[j] == 0) {
+                document.getElementById('buyField').style.display = "inline-block";
+            } else if (j == newplace && step.field[j] != 0 && step.field[j] != returnObj.idPlayer) {
+                document.getElementById('payField').style.display = "inline-block";
+                document.getElementById('standField').style.display = "none";
             }
         };
 
@@ -41,34 +43,25 @@ move.addEventListener('click', () =>{
 
         //выбор действия при сделке
         document.getElementById('dealField').style.display = "block";
-        let returnField = localStorage.getObj("fieldStep");
         let line = "";
+        let foreignObj = localStorage.getObj(step.field[newplace]);
 
-        if(returnField.field[newplace] == 0){
+        if(step.field[newplace] == 0){
             line = newplace + " свободна";
+        } else if (step.field[newplace] == returnObj.idPlayer) {
+            line = newplace + " Ваша ";
         } else {
-            line = newplace + " занята игроком " + returnObj.namePlayer;
-        }
-
-        document.getElementById('iddeal').innerHTML = line;
-
-        //поочередное движение игроков
-        // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
-        if (whoMove == localStorage.length - 2) { 
-            whoMove = 1; 
-        } else {
-            whoMove++;
+            line = newplace + " занята игроком " + foreignObj.namePlayer;
         }
         
+        document.getElementById('iddeal').innerHTML = line;
+
         flagMove = 0;
         document.getElementById('modalCub').className = "btn btb-success";
-        localStorage.setItem("move",whoMove);
-
-        localStorage.setObj("fieldStep", step);
     }
 });
 
-function animePlayer(idPlayer, oldplace, number){
+function animePlayer(idPlayer, oldplace, number) {
   //goXpx на сколько пикселей продвинутся по оси Х
   //goYpx на сколько пикселей продвинутся по оси Y
     let number1;
@@ -156,7 +149,7 @@ function animePlayer(idPlayer, oldplace, number){
             goXpx = 100 + 50*(number-1);
             AnimeCorner(idPlayer,goXpx,goYpx);
         break;
-      }    
+    }    
 }
 
 function Anime(id,goXpx,goYpx) {
@@ -206,22 +199,89 @@ let standField = document.getElementById('standField');
 let payField = document.getElementById('payField');
 
 buyField.addEventListener('click', () =>{
+
+    let number = document.getElementById('cubNumber').innerHTML;
+        number = parseInt(number);
+
     let dealField = localStorage.getObj('fieldStep');
-    let player = localStorage.getObj(whoMove-1);
-    //доработать!!!
-    //whoMove-1, так как в функции move переменная увеличилась на 1
-   // dealField.bgcolor[player.place] = colorPlayer[whoMove-1];
+    let playerNow = localStorage.getObj('move');
+    let player = localStorage.getObj(playerNow);
+    let stay = player.place + number;
+
     //КУПИТЬ
-    
-    //player.funds = player.funds - dealField.cost[player.place];
+    player.funds = player.funds - dealField.cost[stay];
+    player.place = stay;
+    dealField.bgcolor[stay] = colorPlayer[playerNow-1];//индекс с массива с нуля
+    dealField.field[stay] = player.idPlayer;
 
+    localStorage.setObj('fieldStep', dealField);
+    localStorage.setObj(playerNow, player);
 
-    localStorage.setObj('fieldStep',dealField);
-    //localStorage.setObj(whoMove-1,player);
+    //поочередное движение игроков
+    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
+    if (playerNow == localStorage.length - 2) { 
+        playerNow = 1; 
+    } else {
+        playerNow++;
+    }
+         
+    localStorage.setItem('move',playerNow);
+
     document.location.href = 'index.html';
 });
 
 standField.addEventListener('click', () =>{
-    
+    let number = document.getElementById('cubNumber').innerHTML;
+        number = parseInt(number);
+    let playerNow = localStorage.getObj('move');
+    let player = localStorage.getObj(playerNow);
+    let stay = player.place + number;
+
+    player.place = stay;
+    localStorage.setObj(playerNow, player);
+
+    //поочередное движение игроков
+    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
+    if (playerNow == localStorage.length - 2) { 
+        playerNow = 1; 
+    } else {
+        playerNow++;
+    }
+         
+    localStorage.setItem('move',playerNow);
+
+    document.location.href = 'index.html';
+});
+
+payField.addEventListener('click', () =>{
+
+    let number = document.getElementById('cubNumber').innerHTML;
+        number = parseInt(number);
+
+    let dealField = localStorage.getObj('fieldStep');
+    let playerNow = localStorage.getObj('move');
+    let player = localStorage.getObj(playerNow);
+    let stay = player.place + number;
+    //определяем кому принадлежит ячейка, кому нужно заплатить
+    let foreign = localStorage.getObj(dealField.field[stay]);
+
+    //ЗАПЛАТИТЬ
+    player.funds = player.funds - dealField.pay[stay];
+    player.place = stay;
+    foreign.funds = foreign.funds + dealField.pay[stay];
+
+    localStorage.setObj(dealField.field[stay], foreign);
+    localStorage.setObj(playerNow, player);
+
+    //поочередное движение игроков
+    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
+    if (playerNow == localStorage.length - 2) { 
+        playerNow = 1; 
+    } else {
+        playerNow++;
+    }
+         
+    localStorage.setItem('move',playerNow);
+
     document.location.href = 'index.html';
 });
