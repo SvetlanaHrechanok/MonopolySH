@@ -8,9 +8,9 @@ Storage.prototype.getObj = function(key) {
 
 let colorPlayer = ["red","green","blue","yellow"];
 
-let whoMove = JSON.parse(localStorage.getItem("move"));
+let whoMove = JSON.parse(localStorage.getItem('move'));
 let flagMove = 0; //флаг = 0, значит игрок не сделал ход
-let step = localStorage.getObj("fieldStep");
+let step = localStorage.getObj('fieldStep');
 
 //больше нельзя добавлять игроков, игра началась
 for (let i = 0; i < step.field.length; i++) {

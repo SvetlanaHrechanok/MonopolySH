@@ -39,7 +39,7 @@ hr {
   margin: 20px 55px 0px;
 }
 
-#modal {
+#modal, #modal2 {
   position: fixed;
   display: none;
   overflow: auto;
@@ -60,7 +60,6 @@ hr {
 #close {
   margin-top: 10px;
   cursor: pointer;
-  float: right;
 }
 
 #btncub {
@@ -70,11 +69,13 @@ hr {
   float: left;
 }
 
-#cub {
+#cub, #message {
 	height: 250px;
   width: 300px;
   background: #3b5158;
   margin: 0 auto;
+  color: white;
+  font-size: 15px;
 }
 
 .wrap {

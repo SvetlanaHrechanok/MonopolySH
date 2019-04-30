@@ -2,6 +2,8 @@
 
 let go = document.getElementById('go');
 let move = document.getElementById('move');
+let modal2 = document.getElementById('modal2');
+let close = document.getElementById('close');
 
 go.addEventListener('click', () => {
     if (localStorage.length <= 2)
@@ -12,6 +14,31 @@ go.addEventListener('click', () => {
       document.getElementById('btnGo').style.display = "block";
     } 
 });
+
+window.addEventListener('click', (event) => {
+    if(event.target == modal2) {
+        modal2.style.display = "none";
+        document.location.href = 'index.html';
+    }
+});
+
+close.addEventListener('click', () => {
+    modal2.style.display = "none";
+    document.location.href = 'index.html';
+});
+
+function whoGo() {
+    let who = JSON.parse(localStorage.getItem('move'));
+    //поочередное движение игроков
+    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
+    if (who == localStorage.length - 2) { 
+        who = 1; 
+    } else {
+        who++;
+    }
+                     
+    localStorage.setItem('move',who);
+}
 
 move.addEventListener('click', () =>{
 
@@ -27,34 +54,99 @@ move.addEventListener('click', () =>{
             newplace = newplace%40;
         }
 
-        let step = localStorage.getObj('fieldStep');
-             
-        for (let j = 0; j < step.field.length; j++) {
-            if (j == newplace && step.field[j] == 0) {
-                document.getElementById('buyField').style.display = "inline-block";
-            } else if (j == newplace && step.field[j] != 0 && step.field[j] != returnObj.idPlayer) {
-                document.getElementById('payField').style.display = "inline-block";
-                document.getElementById('standField').style.display = "none";
-            }
-        };
-
         //АНИМАЦИЯ
         animePlayer(returnObj.idPlayer, oldplace, number);
 
-        //выбор действия при сделке
-        document.getElementById('dealField').style.display = "block";
-        let line = "";
-        let foreignObj = localStorage.getObj(step.field[newplace]);
+        switch(newplace)
+        {
+            case 0: //start
+                modal2.style.display = "block";
+                document.getElementById('text').innerHTML = "Вы прошли круг. Вам начислено 5000!";
+                returnObj.funds += 5000;
+                returnObj.place = newplace;
+                localStorage.setObj(whoMove, returnObj);
 
-        if(step.field[newplace] == 0){
-            line = newplace + " свободна";
-        } else if (step.field[newplace] == returnObj.idPlayer) {
-            line = newplace + " Ваша ";
-        } else {
-            line = newplace + " занята игроком " + foreignObj.namePlayer;
+                whoGo();
+                break;
+
+            case 10: //Тюрьма
+                returnObj.place = newplace;
+                localStorage.setObj(whoMove, returnObj);
+
+                whoGo();
+                break;
+
+            case 20:  //Свободa
+                returnObj.place = newplace;
+                localStorage.setObj(whoMove, returnObj);
+
+                whoGo();
+                break;
+
+            case 30:  //Идти в Тюрьму
+                returnObj.place = 10;
+                localStorage.setObj(whoMove, returnObj);
+
+                whoGo();
+                break;
+
+            case 2: //Бери карту!
+            case 12:
+            case 22:
+            case 32:
+                returnObj.place = newplace;
+                localStorage.setObj(whoMove, returnObj);
+
+                whoGo();
+                break;
+
+            case 8:
+            case 18:
+            case 28:
+            case 38:
+
+                modal2.style.display = "block";
+                document.getElementById('text').innerHTML = "Вам начислен бонус в размере 500!";
+                alert(returnObj.funds);
+                returnObj.funds += 500;
+                alert(returnObj.funds);
+                returnObj.place = newplace;
+                localStorage.setObj(whoMove, returnObj);
+
+                whoGo();
+                break;
+
+
+            default:
+                //выбор действия при сделке
+                document.getElementById('dealField').style.display = "block";
+                
+                let step = localStorage.getObj('fieldStep');
+                     
+                for (let j = 0; j < step.field.length; j++) {
+                    if (j == newplace && step.field[j] == 0) {
+                        document.getElementById('buyField').style.display = "inline-block";
+                    } else if (j == newplace && step.field[j] != 0 && step.field[j] != returnObj.idPlayer) {
+                        document.getElementById('payField').style.display = "inline-block";
+                        document.getElementById('standField').style.display = "none";
+                    }
+                };
+
+                let line = "";
+                let foreignObj = localStorage.getObj(step.field[newplace]);
+
+                if(step.field[newplace] == 0){
+                    line = newplace + " свободна";
+                } else if (step.field[newplace] == returnObj.idPlayer) {
+                    line = newplace + " Ваша ";
+                } else {
+                    line = newplace + " занята игроком " + foreignObj.namePlayer;
+                }
+                
+                document.getElementById('iddeal').innerHTML = line;
+            break;
+
         }
-        
-        document.getElementById('iddeal').innerHTML = line;
 
         flagMove = 0;
         document.getElementById('modalCub').className = "btn btb-success";
@@ -208,24 +300,25 @@ buyField.addEventListener('click', () =>{
     let player = localStorage.getObj(playerNow);
     let stay = player.place + number;
 
-    //КУПИТЬ
-    player.funds = player.funds - dealField.cost[stay];
-    player.place = stay;
-    dealField.bgcolor[stay] = colorPlayer[playerNow-1];//индекс с массива с нуля
-    dealField.field[stay] = player.idPlayer;
+    if (stay >= 40) {
+            stay = stay%40;
+    }
 
-    localStorage.setObj('fieldStep', dealField);
+    //КУПИТЬ
+    let newfunds = player.funds - dealField.cost[stay];
+    
+    if(newfunds < 0){
+        alert("Вы не можете совержить сделку, так как не достаточно средств!!!");
+    } else {
+        player.funds = newfunds;
+        dealField.bgcolor[stay] = colorPlayer[playerNow-1];//индекс с массива с нуля
+        dealField.field[stay] = player.idPlayer;
+        localStorage.setObj('fieldStep', dealField);
+    }
+    player.place = stay; 
     localStorage.setObj(playerNow, player);
 
-    //поочередное движение игроков
-    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
-    if (playerNow == localStorage.length - 2) { 
-        playerNow = 1; 
-    } else {
-        playerNow++;
-    }
-         
-    localStorage.setItem('move',playerNow);
+    whoGo();
 
     document.location.href = 'index.html';
 });
@@ -237,18 +330,14 @@ standField.addEventListener('click', () =>{
     let player = localStorage.getObj(playerNow);
     let stay = player.place + number;
 
+    if (stay >= 40) {
+            stay = stay%40;
+    }
+
     player.place = stay;
     localStorage.setObj(playerNow, player);
 
-    //поочередное движение игроков
-    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
-    if (playerNow == localStorage.length - 2) { 
-        playerNow = 1; 
-    } else {
-        playerNow++;
-    }
-         
-    localStorage.setItem('move',playerNow);
+    whoGo();
 
     document.location.href = 'index.html';
 });
@@ -262,6 +351,10 @@ payField.addEventListener('click', () =>{
     let playerNow = localStorage.getObj('move');
     let player = localStorage.getObj(playerNow);
     let stay = player.place + number;
+
+    if (stay >= 40) {
+            stay = stay%40;
+    }
     //определяем кому принадлежит ячейка, кому нужно заплатить
     let foreign = localStorage.getObj(dealField.field[stay]);
 
@@ -273,15 +366,7 @@ payField.addEventListener('click', () =>{
     localStorage.setObj(dealField.field[stay], foreign);
     localStorage.setObj(playerNow, player);
 
-    //поочередное движение игроков
-    // 2 - количество элементов в localStorage при старте игры (move & fieldStep)
-    if (playerNow == localStorage.length - 2) { 
-        playerNow = 1; 
-    } else {
-        playerNow++;
-    }
-         
-    localStorage.setItem('move',playerNow);
+    whoGo();
 
     document.location.href = 'index.html';
 });

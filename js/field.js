@@ -138,7 +138,7 @@ let newDiv = {
 
 let bcolor = localStorage.getObj('fieldStep');
 
-for(let i = 0; i < 41; i++){
+for(let i = 0; i < 40; i++){
 	
 	switch(i){
 		case 0:	// start
