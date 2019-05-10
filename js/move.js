@@ -107,9 +107,7 @@ move.addEventListener('click', () =>{
 
                 modal2.style.display = "block";
                 document.getElementById('text').innerHTML = "Вам начислен бонус в размере 500!";
-                alert(returnObj.funds);
                 returnObj.funds += 500;
-                alert(returnObj.funds);
                 returnObj.place = newplace;
                 localStorage.setObj(whoMove, returnObj);
 
@@ -198,7 +196,7 @@ function animePlayer(idPlayer, oldplace, number) {
             number1 = 20 - oldplace;
             goYpx = 50*(number1);
             number = number - number1;
-            goXpx = -(100 + 50*(number-1));
+            goXpx = -50*number;
             AnimeCorner(idPlayer,goXpx,goYpx);
         break;
 
@@ -218,7 +216,7 @@ function animePlayer(idPlayer, oldplace, number) {
             number1 = 30 - oldplace;
             goXpx = -50*(number1);
             number = number - number1;
-            goYpx = -(100 + 50*(number-1));
+            goYpx = -50*number;
             AnimeCorner(idPlayer,goXpx,goYpx);
         break;
 
