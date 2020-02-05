@@ -1,1 +1,1 @@
-# MonopolySH
+# VanillaJs StrategyMoney engine
